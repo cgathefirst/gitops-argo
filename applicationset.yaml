@@ -8,9 +8,9 @@ spec:
     - list:
         elements:
           - project: app1
-            cluster: *
+            cluster: dev
           - project: app2
-            cluster: *
+            cluster: qa
 
             
   template:
