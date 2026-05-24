@@ -1,37 +1,29 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: projects-qa-only
+  name: example-applicationset
   namespace: argocd
 spec:
-  goTemplate: true
-  goTemplateOptions: ["missingkey=error"]
   generators:
     - list:
         elements:
-          - app: app1
-            cluster: k8s-dev
-            cluster: k8s-prod
-            cluster: k8s-qa
-          - app: app2
-            cluster: k8s-dev
-            cluster: k8s-prod
-            cluster: k8s-qa
+          - cluster: dev
+            project: app1
+          - cluster: qa
+            project: app2
   template:
     metadata:
-      name: '{{.app}}-{{.cluster}}'
+      name: '{{project}}-{{cluster}}'
     spec:
       project: default
       source:
         repoURL: https://github.com/cgathefirst/gitops-argo.git
-        targetRevision: second
-        path: '{{.app}}/{{.cluster}}'
+        targetRevision: application
+        path: '{{project}}/k8s-{{cluster}}'
       destination:
         server: https://kubernetes.default.svc
-        namespace: '{{.app}}-{{.cluster}}'
+        namespace: '{{project}}-{{cluster}}'
       syncPolicy:
         automated:
           prune: true
           selfHeal: true
-        syncOptions:
-          - CreateNamespace=true
