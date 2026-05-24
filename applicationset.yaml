@@ -7,12 +7,12 @@ spec:
   generators:
     - list:
         elements:
-          - cluster: dev
-            project: app1
-          - cluster: qa
+          - project: app1
+            cluster: qa
+          - project: app2
             cluster: dev
             cluster: prod
-            project: app2
+            
   template:
     metadata:
       name: '{{project}}-{{cluster}}'
