@@ -10,6 +10,8 @@ spec:
           - cluster: dev
             project: app1
           - cluster: qa
+            cluster: dev
+            cluster: prod
             project: app2
   template:
     metadata:
