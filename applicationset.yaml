@@ -8,10 +8,10 @@ spec:
     - list:
         elements:
           - project: app1
-            cluster: qa
+            cluster: '*'
           - project: app2
-            cluster: dev
-            cluster: prod
+            cluster: '*'
+
             
   template:
     metadata:
