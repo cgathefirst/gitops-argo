@@ -6,9 +6,9 @@ metadata:
 spec:
   project: my-project
   source:
-    repoURL: https://github.com/elevy99927/argo-demo-repo.git
+    repoURL: https://github.com/cgathefirst/gitops-argo.git
     ## add pull from branch dev
-    targetRevision: dev
+    targetRevision: second
     path: .
   destination:
     server: https://kubernetes.default.svc
