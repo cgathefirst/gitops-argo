@@ -9,8 +9,19 @@ spec:
         elements:
           - project: app1
             cluster: dev
-          - project: app2
+          - project: app1
             cluster: qa
+          - project: app1
+            cluster: prod
+          - project: app2
+            cluster: dev
+          - project: app2
+            cluster: prod
+          - project: app3
+            cluster: qa
+
+
+
 
             
   template:
@@ -24,10 +35,8 @@ spec:
         path: '{{project}}/k8s-{{cluster}}'
       destination:
         server: https://kubernetes.default.svc
-        namespace: '{{project}}-{{cluster}}'
+        namespace: default
       syncPolicy:
         automated:
           prune: true
           selfHeal: true
-      syncOptions:
-        - CreateNamespace=true
