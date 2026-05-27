@@ -35,8 +35,10 @@ spec:
         path: '{{project}}/k8s-{{cluster}}'
       destination:
         server: https://kubernetes.default.svc
-        namespace: default
+        namespace: '{{project}}-{{cluster}}'
       syncPolicy:
         automated:
           prune: true
           selfHeal: true
+      synOptions:
+        - CreateNamespace=true
