@@ -1,21 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
-kind: Application
+kind: AppProject
 metadata:
-  name: demo-app
+  name: my-project
   namespace: argocd
 spec:
-  project: my-project
-  source:
-    repoURL: https://github.com/cgathefirst/gitops-argo.git
-    ## add pull from branch dev
-    targetRevision: main
-    path: .
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: default
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
+  description: Allow access to a specific Git repository and branch
+  sourceRepos:
+    - https://github.com/cgathefirst/gitops-argo.git
+  destinations:
+    - namespace: '*'
+      server: https://kubernetes.default.svc
+  sourceNamespaces:
+    - '*'
