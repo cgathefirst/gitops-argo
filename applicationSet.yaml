@@ -27,7 +27,7 @@ spec:
       source:
         repoURL: https://github.com/cgathefirst/gitops-argo.git
         targetRevision: second
-        path: '{{project}}/k8s-{{cluster}}'
+        path: '{{project}}/k8s-{{cluster}}/'
       destination:
         server: https://kubernetes.default.svc
         namespace: '{{project}}-{{cluster}}'
