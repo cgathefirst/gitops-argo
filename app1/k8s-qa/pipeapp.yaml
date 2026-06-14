@@ -23,7 +23,7 @@ spec:
   selector: 
     matchLabels:
       app: examgabieyal-qa
-  replicas: 1   #from values
+  replicas: 2   #from values
   template:
     metadata:
       labels:
