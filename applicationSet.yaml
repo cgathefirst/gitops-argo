@@ -13,12 +13,7 @@ spec:
             cluster: qa
           - project: app1
             cluster: prod
-          - project: app2
-            cluster: dev
-          - project: app2
-            cluster: prod
-          - project: app2
-            cluster: qa
+
 
 
 
