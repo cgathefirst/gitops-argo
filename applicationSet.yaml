@@ -13,12 +13,6 @@ spec:
             cluster: qa
           - project: app1
             cluster: prod
-
-
-
-
-
-            
   template:
     metadata:
       name: '{{project}}-{{cluster}}'
@@ -35,5 +29,5 @@ spec:
         automated:
           prune: true
           selfHeal: true
-      syncOptions:
-        - CreateNamespace=true
+        syncOptions:
+          - CreateNamespace=true
