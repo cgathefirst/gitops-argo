@@ -31,7 +31,7 @@ spec:
     spec:
       containers:
       - name: examgabieyal-dev #from values
-        image: cgabya12/examgabieyal:latest #from values
+        image: cgabya12/examgabieyal:dev #from values
         ports:
         - containerPort: 8000
 ---
