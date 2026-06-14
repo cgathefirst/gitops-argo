@@ -3,7 +3,7 @@
 kind: Service     
 apiVersion: v1     
 metadata:
-  name: examgabieyal-7-svc #from RELEASE NAME
+  name: examgabieyal-qa-svc #from RELEASE NAME
 spec:
   type: ClusterIP
   ports:
@@ -12,26 +12,26 @@ spec:
      name: http   
      protocol: TCP
   selector:
-    app: examgabieyal-7
+    app: examgabieyal-qa
 ---
 # Source: just-app/templates/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: examgabieyal-7-deploy
+  name: examgabieyal-qa-deploy
 spec:
   selector: 
     matchLabels:
-      app: examgabieyal-7
+      app: examgabieyal-qa
   replicas: 1   #from values
   template:
     metadata:
       labels:
-        app: examgabieyal-7
+        app: examgabieyal-qa
     spec:
       containers:
-      - name: examgabieyal-7 #from values
-        image: cgabya12/examgabieyal:latest #from values
+      - name: examgabieyal-qa #from values
+        image: cgabya12/examgabieyal:qa #from values
         ports:
         - containerPort: 8000
 ---
@@ -39,7 +39,7 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name:  examgabieyal-7-ingress
+  name:  examgabieyal-qa-ingress
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
@@ -51,6 +51,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name:  examgabieyal-7-svc
+                name:  examgabieyal-qa-svc
                 port:
                   number: 8000
