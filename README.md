@@ -1,33 +1,33 @@
-# Argo CD ApplicationSet: Example Matrix Deployment
+# Argo CD ApplicationSet: Multi-Environment Matrix Deployment
 
-This repository contains an Argo CD `ApplicationSet` configuration used to automate the deployment of multi-environment applications from a centralized GitOps repository. 
+This repository contains the configuration and operational documentation for managing multi-environment Kubernetes deployments using an Argo CD `ApplicationSet`. 
 
-Using the **List Generator**, this definition dynamically instantiates separate Argo CD Applications for each combination of project and cluster environment specified.
+By utilizing the **List Generator**, this setup automates the lifecycle of individual applications across `dev`, `qa`, and `prod` stages while keeping the manifest configurations completely unified.
 
 ---
 
-## 📋 Prerequisites & Requirements
+## 📋 Infrastructure Requirements & Prerequisites
 
-To successfully deploy and run this `ApplicationSet`, your infrastructure must meet the following prerequisites:
+Before applying this configuration, verify that your target environment satisfies the following prerequisites:
 
-### 1. Argo CD Installation
-* **Argo CD** must be installed and running in your Kubernetes cluster.
-* The ApplicationSet controller must be active (included by default in Argo CD v2.0+).
-* This configuration targets the `argocd` namespace for the ApplicationSet resource itself.
+### 1. Cluster Prerequisites
+* **Argo CD Installation:** A functional installation of Argo CD (v2.0 or higher is required, as `ApplicationSet` capabilities are bundled natively).
+* **Namespace:** The target namespace `argocd` must exist and match where your Argo CD operator/controllers are actively running.
+* **RBAC Privileges:** The Argo CD application controller service account requires permissions to provision new namespaces cluster-wide, since the automation policy enables namespace creation on-demand.
 
-### 2. Git Repository & Structure
-The controller pulls configurations from the following repository:
+### 2. GitOps Repository Layout
+The ApplicationSet tracks a remote repository structure. To prevent synchronization failures, your target repository must be structured to resolve the parameter paths correctly.
+
 * **Repository URL:** `https://github.com/cgathefirst/gitops-argo.git`
-* **Target Revision (Branch):** `second`
+* **Target Branch:** `second`
 
-For the matrix elements to synchronize correctly, your Git repository **must** have the following folder structure corresponding to the generator elements:
-
+#### Expected Directory Structure:
 ```text
-gitops-argo/ (Branch: second)
-└── app1/
-    ├── k8s-dev/
-    │   └── [Kubernetes manifests / Kustomize / Helm charts]
-    ├── k8s-qa/
-    │   └── [Kubernetes manifests / Kustomize / Helm charts]
-    └── k8s-prod/
-        └── [Kubernetes manifests / Kustomize / Helm charts]
+gitops-argo/                  # Root of the 'second' branch
+└── app1/                     # Matches the {{project}} value
+    ├── k8s-dev/              # Matches the k8s-{{cluster}} path for dev
+    │   └── manifests.yaml    # Raw manifests, Kustomize, or Helm charts
+    ├── k8s-qa/               # Matches the k8s-{{cluster}} path for qa
+    │   └── manifests.yaml
+    └── k8s-prod/             # Matches the k8s-{{cluster}} path for prod
+        └── manifests.yaml
